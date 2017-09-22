@@ -9,6 +9,8 @@
   "author": "Jesus Villarroel",
   "license": "MIT",
   "dependencies": {
+    "html2json": "^1.0.2",
+    "node-fetch": "^1.7.3",
     "node-ping": "^0.1.0",
     "ping": "^0.2.2"
   }

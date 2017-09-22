@@ -1,19 +1,29 @@
-var ping = require('ping');
+"use strict";
+
+var fetch = require('node-fetch')
+
+var devices = [];
  
 var hosts = [
-'192.168.0.7', 
-'192.168.0.160',  
-'192.168.0.157',
-'192.168.0.148', 
-'192.168.0.2',  
-'192.168.0.75',
-'192.168.0.138', 
-'192.168.0.156'
-];
+'http://192.168.0.7', 
+'http://192.168.0.160',  
+'http://192.168.0.157',
+'http://192.168.0.148', 
+'http://192.168.0.2',  
+'http://192.168.0.75',
+'http://192.168.0.138', 
+'http://192.168.0.156'
+]
 
-hosts.forEach(function(host){
-    ping.sys.probe(host, function(isAlive){
-        var msg = isAlive ? 'host ' + host + ' is alive' : 'host ' + host + ' is dead';
-        console.log(msg);
-    });
-});
+hosts.forEach(function(host){	
+	fetch(host)
+    .then(function(res) { return res.text()})
+    .then(function(body) {
+    	var x = body.match(/<title>(.*?)<\/title>/)
+		var device = { ip: host, name: x[1] }
+		return device
+    })
+    .then(function(d){
+    	console.log(d);
+    })
+})
